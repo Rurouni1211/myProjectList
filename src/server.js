@@ -1,6 +1,6 @@
-const express = require("express");
-const cors = require("cors");
-const axios = require("axios");
+import express from "express"; // ES module import
+import cors from "cors"; // ES module import
+import axios from "axios"; // ES module import
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -15,7 +15,7 @@ app.use(
 
 app.use(express.json());
 
-// Your translation route
+// Translation route
 app.post("/translate", async (req, res) => {
   const { text, targetLang } = req.body;
 
