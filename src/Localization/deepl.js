@@ -3,13 +3,13 @@ import axios from "axios";
 export const translateText = async (text, targetLang) => {
   try {
     const response = await fetch(
-      "https://your-app-name.herokuapp.com/translate",
+      "https://myvideo-bfb0503de47b.herokuapp.com/translate",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text, targetLang }),
+        body: JSON.stringify({ text: text, targetLang: targetLang }),
       }
     );
 

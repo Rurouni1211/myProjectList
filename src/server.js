@@ -19,12 +19,20 @@ app.use(express.json());
 app.post("/translate", async (req, res) => {
   const { text, targetLang } = req.body;
 
+  // Ensure that the text is an array and targetLang is not empty
+  if (!Array.isArray([text]) || !targetLang) {
+    return res.status(400).json({
+      message:
+        "Bad Request: Missing or incorrect text or targetLang parameters",
+    });
+  }
+
   try {
     const response = await axios.post(
       "https://api-free.deepl.com/v2/translate",
       {
-        text: [text],
-        target_lang: targetLang,
+        text: [text], // Make sure text is an array
+        target_lang: targetLang, // Ensure targetLang is a valid language code
       },
       {
         headers: {
