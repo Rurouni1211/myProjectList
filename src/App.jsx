@@ -30,7 +30,7 @@ function App() {
 ])
   return (
     <>
-      <RouterProvider router={router} basename="/my-app" />
+      <RouterProvider router={router}  />
     </>
     
     
