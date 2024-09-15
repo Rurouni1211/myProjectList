@@ -5,25 +5,32 @@ import './App.css'
 import { createBrowserRouter, RouterProvider, redirect, Navigate } from 'react-router-dom'
 import Submit from "./components/Form"
 import VideoData from "./VideoData"
+import Layout from "./Layout"
 
 function App() {
   
   const router = createBrowserRouter([
   
     {
-      
       path: '/',
-    element: <VideoData />, // Layout that includes Navbar
-    },
-    {
-      path: '/submit',
-      element: <Submit/>,
-    },
+    element: <Layout />, // Layout that includes Navbar
+    children: [
+      {
+        path: '',
+        element:  <VideoData /> ,
+      },
+      {
+        path: 'submit',
+        element: <Submit/>
+      },
+     
+    ]
+    }
   
 ])
   return (
     <>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} basename="/my-app" />
     </>
     
     

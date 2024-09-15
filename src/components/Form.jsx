@@ -12,6 +12,7 @@ export default function Form() {
   const [video, setVideo] = useState(null);  // For Video Upload
   const [progress, setProgress] = useState(0);
   const [videoURL, setVideoURL] = useState('');
+  const [downloadLink, setDownloadLink] = useState('')
 
   const handleVideoChange = (e) => {
     if (e.target.files[0]) {
@@ -29,11 +30,13 @@ export default function Form() {
         description: description,
         url: link,  // Store YouTube link
         type: 'youtube',
+        downloadLink: downloadLink
       });
 
       setTitle('');
       setDescription('');
       setLink('');
+      setDownloadLink('')
       alert('YouTube link saved successfully!');
     } else if (selectedOption === 'upload' && video) {
       // Upload video to Firebase Storage
@@ -58,6 +61,7 @@ export default function Form() {
             description: description,
             url: downloadURL,  // Store video download URL
             type: 'video',
+            downloadLink: downloadLink
           });
 
           setTitle('');
@@ -65,6 +69,7 @@ export default function Form() {
           setVideo(null);
           setProgress(0);
           setVideoURL(downloadURL);
+          setDownloadLink('')
           alert('Video uploaded successfully!');
         }
       );
@@ -97,6 +102,17 @@ export default function Form() {
           className="w-full mt-2 p-2 border rounded-lg focus:outline-none focus:ring focus:ring-cyan-400"
         />
       </label>
+
+      <label className='block'>
+      <span className="block text-lg font-medium">Download Link</span>
+        <textarea
+          placeholder="DownLoad Link"
+          value={downloadLink}
+          onChange={(e) => setDownloadLink(e.target.value)}
+          required
+          className="w-full mt-2 p-2 border rounded-lg focus:outline-none focus:ring focus:ring-cyan-400"
+        />
+        </label>
 
       {/* Radio buttons for selecting YouTube Link or Video Upload */}
       <div className="flex items-center space-x-4">

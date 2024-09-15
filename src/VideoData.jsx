@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from './firebase/firebase';  // Import Firestore instance
 import { translateText } from './Localization/deepl';  // Import translation utility
+import { Navigate } from 'react-router-dom';
 
 const VideoData = () => {
   const [videos, setVideos] = useState([]);
@@ -41,10 +42,12 @@ const VideoData = () => {
     const updatedVideos = await Promise.all(videos.map(async (video) => {
       const translatedTitle = await translateText(video.title, selectedLanguage);
       const translatedDescription = await translateText(video.description, selectedLanguage);
+      const translateDownloadLink = await translateDownloadLink(video.downloadLink, selectedLanguage); 
       return {
         ...video,
         translatedTitle,
-        translatedDescription
+        translatedDescription, 
+        translateDownloadLink
       };
     }));
     setVideos(updatedVideos);
@@ -89,13 +92,13 @@ const VideoData = () => {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
         {videos.map((video) => (
-          <div key={video.id} className="bg-white p-4 rounded-lg shadow-md">
-            <h2 className="text-lg font-semibold mb-2">
+          <div key={video.id} className="bg-orange-200 p-4 rounded-lg shadow-md overflow-hidden">
+            <h2 className="text-lg text-black font-semibold mb-2">
               {loadingVideos[video.id] ? 'Translating...' : video.translatedTitle || video.title}
             </h2>
-            <p className="text-sm mb-4">
+            <p className="text-sm text-black mb-4">
               {loadingVideos[video.id] ? 'Translating...' : video.translatedDescription || video.description}
             </p>
 
@@ -114,13 +117,25 @@ const VideoData = () => {
               />
             )}
 
+              <p className="text-sm text-black mb-4">
+               Download Here - 
+               <a 
+    href={loadingVideos[video.id] ? '#' : video.translateDownloadLink || video.downloadLink}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-blue-500 hover:underline break-words whitespace-normal overflow-hidden text-ellipsis inline-block max-w-full"
+  >
+              {loadingVideos[video.id] ? 'Translating...' : video.downloadLink}
+            </a>
+            </p>
+
             {/* Delete Button */}
-            <button
+            {/* <button
               onClick={() => handleDelete(video.id)}
               className="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
             >
               Delete
-            </button>
+            </button> */}
           </div>
         ))}
       </div>
