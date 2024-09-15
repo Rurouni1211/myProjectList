@@ -42,7 +42,7 @@ const VideoData = () => {
     const updatedVideos = await Promise.all(videos.map(async (video) => {
       const translatedTitle = await translateText(video.title, selectedLanguage);
       const translatedDescription = await translateText(video.description, selectedLanguage);
-      const translateDownloadLink = await translateDownloadLink(video.downloadLink, selectedLanguage); 
+      const translateDownloadLink = await translateText(video.downloadLink, selectedLanguage); 
       return {
         ...video,
         translatedTitle,
@@ -117,17 +117,18 @@ const VideoData = () => {
               />
             )}
 
-              <p className="text-sm text-black mb-4">
-               Download Here - 
-               <a 
-    href={loadingVideos[video.id] ? '#' : video.translateDownloadLink || video.downloadLink}
+<p className="text-sm text-black mb-4">
+  Download Here - 
+  <a 
+    href={loadingVideos[video.id] ? '#' : video.translatedDownloadLink || video.downloadLink}
     target="_blank"
     rel="noopener noreferrer"
     className="text-blue-500 hover:underline break-words whitespace-normal overflow-hidden text-ellipsis inline-block max-w-full"
   >
-              {loadingVideos[video.id] ? 'Translating...' : video.downloadLink}
-            </a>
-            </p>
+    {loadingVideos[video.id] ? 'Translating...' : video.translatedDownloadLink || video.downloadLink}
+  </a>
+</p>
+
 
             {/* Delete Button */}
             {/* <button
