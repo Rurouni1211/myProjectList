@@ -6,6 +6,8 @@ import { createBrowserRouter, RouterProvider, redirect, Navigate } from 'react-r
 import Submit from "./components/Form"
 import VideoData from "./VideoData"
 import Layout from "./Layout"
+import PrivateRoute from './components/PrivateRoute'
+import LoginForm from './components/LoginForm'
 
 function App() {
   
@@ -20,10 +22,18 @@ function App() {
         element:  <VideoData /> ,
       },
       {
-        path: 'submit',
-        element: <Submit/>
+    path: 'submit',
+        element: (
+          <PrivateRoute>
+            <Submit />
+          </PrivateRoute>
+        ),
       },
      
+        {
+        path: 'login',
+        element: <LoginForm />
+      }
     ]
     }
   

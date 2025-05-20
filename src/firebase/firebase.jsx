@@ -2,6 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,8 +18,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig); 
 export const db = getFirestore(app); 
 const storage = getStorage(app);
 
+export const auth = getAuth(); // already initialized Firebase app
+
+console.log(import.meta.env.VITE_FIREBASE_API_KEY); // Should log the API key
+console.log(import.meta.env.VITE_FIREBASE_STORAGE_BUCKET); 
 export { storage };
