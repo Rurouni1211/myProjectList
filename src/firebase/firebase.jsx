@@ -26,4 +26,5 @@ export const auth = getAuth(); // already initialized Firebase app
 
 console.log(import.meta.env.VITE_FIREBASE_API_KEY); // Should log the API key
 console.log(import.meta.env.VITE_FIREBASE_STORAGE_BUCKET); 
+console.log("PROJECT ID:", import.meta.env.VITE_FIREBASE_PROJECT_ID);
 export { storage };

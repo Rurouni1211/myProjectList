@@ -53,7 +53,7 @@ export default function Form() {
       resetForm();
       alert('YouTube link saved successfully!');
     } else if (selectedOption === 'upload' && video) {
-      const storageRef = ref(storage, `videos/${video.name}`);
+      const storageRef = ref(storage, `videos/${Date.now()}-${video.name}`);
       const uploadTask = uploadBytesResumable(storageRef, video);
 
       uploadTask.on(
